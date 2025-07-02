@@ -24,107 +24,48 @@ class InventoryManagementSystem:
         # Create main interface
         self.create_main_interface()
 
-    # def init_database(self):
-    #     """Initialize SQLite database with required tables"""
-    #     self.conn = sqlite3.connect('inventory.db')
-    #     self.cursor = self.conn.cursor()
+    def create_main_interface(self):
+        """Create the main interface with navigation"""
+        # Header
+        header_frame = tk.Frame(self.root, bg='#2c3e50', height=70)
+        header_frame.pack(fill='x', padx=0, pady=0)
+        header_frame.pack_propagate(False)
 
-    #     # Create categories table
-    #     self.cursor.execute('''
-    #         CREATE TABLE IF NOT EXISTS categories (
-    #             id TEXT PRIMARY KEY,
-    #             name TEXT UNIQUE NOT NULL,
-    #             description TEXT,
-    #             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    #         )
-    #     ''')
+        title_label = tk.Label(header_frame, text="Inventory Management System",
+                               font=('Arial', 24, 'bold'), fg='white', bg='#2c3e50')
+        title_label.pack(pady=10)
 
-    #     # Create items table
-    #     self.cursor.execute('''
-    #         CREATE TABLE IF NOT EXISTS items (
-    #             id TEXT PRIMARY KEY,
-    #             name TEXT NOT NULL,
-    #             serial_no TEXT UNIQUE NOT NULL,
-    #             category_id TEXT,
-    #             total_amount INTEGER NOT NULL,
-    #             available_amount INTEGER NOT NULL,
-    #             price REAL NOT NULL,
-    #             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    #             FOREIGN KEY (category_id) REFERENCES categories (id)
-    #         )
-    #     ''')
+        # Navigation buttons
+        nav_frame = tk.Frame(self.root, bg='#34495e', height=55)
+        nav_frame.pack(fill='x')
+        nav_frame.pack_propagate(False)
 
-    #     # Create customers table
-    #     self.cursor.execute('''
-    #         CREATE TABLE IF NOT EXISTS customers (
-    #             id TEXT PRIMARY KEY,
-    #             name TEXT NOT NULL,
-    #             mobile TEXT UNIQUE NOT NULL,
-    #             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    #         )
-    #     ''')
+        button_style = {'font': ('Arial', 12), 'bg': '#3498db', 'fg': 'white',
+                        'relief': 'flat', 'padx': 20, 'pady': 8}
 
-    #     # Create purchases table
-    #     self.cursor.execute('''
-    #         CREATE TABLE IF NOT EXISTS purchases (
-    #             id TEXT PRIMARY KEY,
-    #             customer_id TEXT,
-    #             purchase_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    #             total_amount REAL NOT NULL,
-    #             FOREIGN KEY (customer_id) REFERENCES customers (id)
-    #         )
-    #     ''')
+        # tk.Button(nav_frame, text="Categories", command=self.show_categories,
+        #           **button_style).pack(side='left', padx=10, pady=10)
+        # tk.Button(nav_frame, text="Items", command=self.show_items,
+        #           **button_style).pack(side='left', padx=10, pady=10)
+        # tk.Button(nav_frame, text="Customers", command=self.show_customers,
+        #           **button_style).pack(side='left', padx=10, pady=10)
+        # tk.Button(nav_frame, text="Purchase", command=self.show_purchase,
+        #           **button_style).pack(side='left', padx=10, pady=10)
+        tk.Button(nav_frame, text="Categories",
+                  **button_style).pack(side='left', padx=10, pady=10)
+        tk.Button(nav_frame, text="Items",
+                  **button_style).pack(side='left', padx=10, pady=10)
+        tk.Button(nav_frame, text="Customers",
+                  **button_style).pack(side='left', padx=10, pady=10)
+        tk.Button(nav_frame, text="Purchase",
+                  **button_style).pack(side='left', padx=10, pady=10)
 
-    #     # Create purchase_items table
-    #     self.cursor.execute('''
-    #         CREATE TABLE IF NOT EXISTS purchase_items (
-    #             id TEXT PRIMARY KEY,
-    #             purchase_id TEXT,
-    #             item_id TEXT,
-    #             quantity INTEGER NOT NULL,
-    #             unit_price REAL NOT NULL,
-    #             total_price REAL NOT NULL,
-    #             FOREIGN KEY (purchase_id) REFERENCES purchases (id),
-    #             FOREIGN KEY (item_id) REFERENCES items (id)
-    #         )
-    #     ''')
+        # Main content area
+        self.main_frame = tk.Frame(self.root, bg='#f0f0f0')
+        self.main_frame.pack(fill='both', expand=True, padx=20, pady=20)
 
-    #     self.conn.commit()
-
-    # def create_main_interface(self):
-    #     """Create the main interface with navigation"""
-    #     # Header
-    #     header_frame = tk.Frame(self.root, bg='#2c3e50', height=80)
-    #     header_frame.pack(fill='x', padx=0, pady=0)
-    #     header_frame.pack_propagate(False)
-
-    #     title_label = tk.Label(header_frame, text="Inventory Management System",
-    #                            font=('Arial', 24, 'bold'), fg='white', bg='#2c3e50')
-    #     title_label.pack(pady=20)
-
-    #     # Navigation buttons
-    #     nav_frame = tk.Frame(self.root, bg='#34495e', height=60)
-    #     nav_frame.pack(fill='x')
-    #     nav_frame.pack_propagate(False)
-
-    #     button_style = {'font': ('Arial', 12), 'bg': '#3498db', 'fg': 'white',
-    #                     'relief': 'flat', 'padx': 20, 'pady': 8}
-
-    #     tk.Button(nav_frame, text="Categories", command=self.show_categories,
-    #               **button_style).pack(side='left', padx=10, pady=10)
-    #     tk.Button(nav_frame, text="Items", command=self.show_items,
-    #               **button_style).pack(side='left', padx=10, pady=10)
-    #     tk.Button(nav_frame, text="Customers", command=self.show_customers,
-    #               **button_style).pack(side='left', padx=10, pady=10)
-    #     tk.Button(nav_frame, text="Purchase", command=self.show_purchase,
-    #               **button_style).pack(side='left', padx=10, pady=10)
-
-    #     # Main content area
-    #     self.main_frame = tk.Frame(self.root, bg='#f0f0f0')
-    #     self.main_frame.pack(fill='both', expand=True, padx=20, pady=20)
-
-    #     # Show categories by default
-    #     self.show_categories()
+        # # Show categories by default
+        # self.show_categories()
 
     # def clear_main_frame(self):
     #     """Clear the main frame"""
