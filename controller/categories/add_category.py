@@ -1,10 +1,9 @@
 from tkinter import messagebox
 import sqlite3
 import uuid
-from controller.categories.clear_category_form import clear_category_form
 
 
-def add_category(cat_name_entry, cat_desc_entry, cat_tree, categories_data_list, cursor, conn):
+def add_category(cat_name_entry, cat_desc_entry, cat_tree, categories_data_list, cursor, conn, clear_category_form):
     """Add new category"""
     name = cat_name_entry.get().strip()
     description = cat_desc_entry.get().strip()
@@ -21,12 +20,12 @@ def add_category(cat_name_entry, cat_desc_entry, cat_tree, categories_data_list,
         ''', (category_id, name, description))
         conn.commit()
         messagebox.showinfo("Success", "Category added successfully!")
-        clear_category_form(cat_name_entry, cat_desc_entry)
+        clear_category_form()
 
         # Add to categories_data_list and treeview
         new_row = (category_id, name, description)
         categories_data_list.append(new_row)
-        cat_tree.insert('', 'end', values=new_row)
+        cat_tree.insert('', 'end', values=new_row[1:])
     except sqlite3.IntegrityError:
         messagebox.showerror("Error", "Category name already exists!")
     except Exception as e:

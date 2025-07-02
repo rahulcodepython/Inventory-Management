@@ -1,8 +1,7 @@
 from tkinter import messagebox
-from controller.categories.clear_category_form import clear_category_form
 
 
-def update_category(cat_tree, cat_name_entry, cat_desc_entry, cursor, conn, categories_data_list, show_add_button):
+def update_category(cat_tree, cat_name_entry, cat_desc_entry, cursor, conn, categories_data_list, show_add_button, clear_category_form):
     """Update selected category"""
     selected = cat_tree.selection()
 
@@ -29,11 +28,11 @@ def update_category(cat_tree, cat_name_entry, cat_desc_entry, cursor, conn, cate
         ''', (name, description, category_id))
         conn.commit()
         messagebox.showinfo("Success", "Category updated successfully!")
-        clear_category_form(cat_name_entry, cat_desc_entry)
+        clear_category_form()
 
         updated_row = (category_id, name, description)
         categories_data_list[index] = updated_row
-        cat_tree.item(selected[0], values=updated_row)
+        cat_tree.item(selected[0], values=updated_row[1:])
         cat_tree.selection_remove(selected[0])
 
         show_add_button()  # Reset to add button after update

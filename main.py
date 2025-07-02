@@ -15,6 +15,7 @@ from commands import create_tables as create_tables_commands
 from src.init_database import init_database
 from src.create_main_interface import create_main_interface
 from ui.categories import CategoryManagement
+from ui.products import ProductManagement
 
 
 class InventoryManagementSystem:
@@ -31,10 +32,16 @@ class InventoryManagementSystem:
 
         self.category_management = CategoryManagement(
             self.root, self.main_frame, self.cursor, self.conn)
+        self.product_management = ProductManagement(
+            self.root, self.main_frame, self.cursor, self.conn)
 
         # Create main interface
         create_main_interface(
-            self.root, self.main_frame, self.category_management.show_categories)
+            self.root,
+            self.main_frame,
+            self.category_management.show_categories,
+            self.product_management.show_products
+        )
 
 
 def main():

@@ -5,7 +5,6 @@ from controller.categories.add_category import add_category
 from controller.categories.load_categories import load_categories
 from controller.categories.delete_category import delete_category
 from controller.categories.update_category import update_category
-from controller.categories.clear_category_form import clear_category_form
 
 
 class CategoryManagement:
@@ -45,17 +44,31 @@ class CategoryManagement:
         button_frame.grid(row=0, column=4, columnspan=2, pady=10)
 
         self.add_button = tk.Button(button_frame, text="Add Category", command=lambda: add_category(
-            self.cat_name_entry, self.cat_desc_entry, self.cat_tree, self.categories_data_list, self.cursor, self.conn),
+            self.cat_name_entry,
+            self.cat_desc_entry,
+            self.cat_tree,
+            self.categories_data_list,
+            self.cursor,
+            self.conn,
+            self.clear_category_form
+        ),
             bg='#27ae60', fg='white', padx=20)
         self.add_button.grid(row=0, column=0, padx=5, sticky='w')
 
         self.update_button = tk.Button(button_frame, text="Update Category", command=lambda: update_category(
-            self.cat_tree, self.cat_name_entry, self.cat_desc_entry, self.cursor, self.conn, self.categories_data_list, self.show_add_button),
+            self.cat_tree,
+            self.cat_name_entry,
+            self.cat_desc_entry,
+            self.cursor,
+            self.conn,
+            self.categories_data_list,
+            self.show_add_button,
+            self.clear_category_form
+        ),
             bg='#f39c12', fg='white', padx=20)
 
-        tk.Button(button_frame, text="Clear", command=lambda: clear_category_form(
-            self.cat_name_entry, self.cat_desc_entry, self.show_add_button),
-            bg='#95a5a6', fg='white', padx=20).grid(row=0, column=1, padx=5, sticky='w')
+        tk.Button(button_frame, text="Clear", command=self.clear_category_form,
+                  bg='#95a5a6', fg='white', padx=20).grid(row=0, column=1, padx=5, sticky='w')
 
         # List frame
         list_frame = tk.LabelFrame(self.main_frame, text="Categories List",
@@ -63,7 +76,7 @@ class CategoryManagement:
         list_frame.pack(fill='both', expand=True, pady=10)
 
         # Treeview for categories
-        columns = ('ID', 'Name', 'Description')
+        columns = ('Name', 'Description')
         self.cat_tree = ttk.Treeview(
             list_frame, columns=columns, show='headings', height=10)
 
@@ -108,11 +121,18 @@ class CategoryManagement:
             values = item['values']
 
             self.cat_name_entry.delete(0, tk.END)
-            self.cat_name_entry.insert(0, values[1])
+            self.cat_name_entry.insert(0, values[0])
 
             self.cat_desc_entry.delete(0, tk.END)
-            self.cat_desc_entry.insert(0, values[2])
+            self.cat_desc_entry.insert(0, values[1])
 
     def show_cat_context_menu(self, event):
         """Show context menu for categories"""
         self.cat_menu.post(event.x_root, event.y_root)
+
+    def clear_category_form(self):
+        """Clear category form"""
+        self.cat_name_entry.delete(0, tk.END)
+        self.cat_desc_entry.delete(0, tk.END)
+        self.cat_name_entry.focus_set()
+        self.show_add_button()

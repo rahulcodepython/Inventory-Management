@@ -12,9 +12,8 @@ def delete_category(cat_tree, categories_data_list, cursor, conn):
 
     if messagebox.askyesno("Confirm", "Are you sure you want to delete this category?"):
         try:
-            item = cat_tree.item(selected[0])
             index = cat_tree.index(selected[0])
-            category_id = item['values'][0]
+            category_id = categories_data_list[index][0]
 
             cursor.execute(
                 'DELETE FROM categories WHERE id = ?', (category_id,))
