@@ -52,16 +52,17 @@ def add_product(self: "ProductManagement"):
 
     try:
         item_id = str(uuid.uuid4())
-        new_item = (item_id, name, serial_no, category_id,
-                    total_amount, available_amount, price)
         self.cursor.execute('''
             INSERT INTO items (id, name, serial_no, category_id, total_amount, available_amount, price)
             VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', new_item)
+        ''', (item_id, name, serial_no, category_id,
+              total_amount, available_amount, price))
         self.conn.commit()
         messagebox.showinfo("Success", "product added successfully!")
         self.clear_product_form()
 
+        new_item = (item_id, name, serial_no, category,
+                    total_amount, available_amount, price)
         self.products_data_list.append(new_item)
         self.item_tree.insert('', 'end', values=new_item)
     except sqlite3.IntegrityError:
