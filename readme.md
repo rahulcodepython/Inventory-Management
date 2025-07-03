@@ -50,13 +50,13 @@ Download the latest `.exe` (Windows) or Linux executable from the [Releases](htt
 #### 🔧 Installation
 
 ```bash
-git clone https://github.com/rahulcodepython/inventory-management-system.git
+git [clone https://github.com/rahulcodepython/inventory-management-system.git](https://github.com/rahulcodepython/Inventory-Management.git)
 cd inventory-management-system
 pip install -r requirements.txt
-python app.py
+python main.py
 ```
 
-Replace `app.py` with your actual main Python file name if it's different.
+Replace `main.py` with your actual main Python file name if it's different.
 
 ---
 
@@ -88,8 +88,6 @@ Feel free to check the [issues page](https://github.com/rahulcodepython/inventor
 ## 📬 Contact
 
 For any queries, suggestions, or feedback, feel free to reach out via GitHub or LinkedIn.
-
-```
 
 ---
 
