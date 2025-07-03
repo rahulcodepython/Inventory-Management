@@ -32,10 +32,13 @@ A clean and intuitive desktop-based Inventory Management System built with Pytho
 
 ### 🔒 Option 1: Run Executable (No Setup Required)
 
-Download the latest `.exe` (Windows) or Linux executable from the [Releases](https://github.com/rahulcodepython/inventory-management-system/releases) page and run it directly on your system.
+Download the latest `.exe` (Windows) or Linux executable from the [Releases](https://github.com/rahulcodepython/Inventory-Management/releases/tag/0.0.1) page and run it directly on your system.
 
-> ⚠️ Note: Make sure your OS allows apps from unknown developers if you're on macOS or Linux.
+> ⚠️ Note: Make sure your OS allows apps from unknown developers.
 
+🐧 Linux:
+- Download and extract `InventoryManagementSystem-linux.tar.gz`
+- Run it with: `./InventoryManagementSystem-linux-x64`
 ---
 
 ### 💻 Option 2: Run from Source
