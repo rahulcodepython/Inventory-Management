@@ -1,6 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 from src.clear_main_frame import clear_main_frame
+from controller.products.add_product import add_product
+from controller.products.update_product import update_product
+from controller.products.load_product_categories import load_product_categories
+from controller.products.load_products import load_products
+from controller.products.delete_product import delete_product
 
 
 class ProductManagement:
@@ -10,6 +15,7 @@ class ProductManagement:
         self.cursor = cursor
         self.conn = conn
         self.products_data_list = []  # List to hold product data
+        self.categories_data_dict = {}  # Dictionary to hold category data
 
     def show_products(self):
         """Show products management interface"""
@@ -24,10 +30,6 @@ class ProductManagement:
                                    font=('Arial', 12, 'bold'), bg='#f0f0f0', padx=20, pady=10)
         form_frame.pack(fill='x', pady=10)
 
-        # First row
-        # row1 = tk.Frame(form_frame, bg='#f0f0f0')
-        # row1.pack(fill='x', pady=5)
-
         tk.Label(form_frame, text="Name:", bg='#f0f0f0').grid(
             row=0, column=0, sticky='w', padx=10, pady=5)
         self.item_name_entry = tk.Entry(form_frame, width=20)
@@ -38,14 +40,11 @@ class ProductManagement:
         self.item_serial_entry = tk.Entry(form_frame, width=20)
         self.item_serial_entry.grid(row=0, column=3, padx=10, pady=5)
 
-        # Second row
-        # row2 = tk.Frame(form_frame, bg='#f0f0f0')
-        # row2.pack(fill='x', pady=5)
-
         tk.Label(form_frame, text="Category:", bg='#f0f0f0').grid(
             row=1, column=0, sticky='w', padx=10, pady=5)
         self.item_category_combo = ttk.Combobox(form_frame, width=18)
         self.item_category_combo.grid(row=1, column=1, padx=10, pady=5)
+        self.item_category_combo['state'] = 'readonly'
 
         tk.Label(form_frame, text="Price:", bg='#f0f0f0').grid(
             row=1, column=2, sticky='w', padx=10, pady=5)
@@ -72,11 +71,14 @@ class ProductManagement:
         button_frame = tk.Frame(form_frame, bg='#f0f0f0')
         button_frame.grid(row=1, column=4, pady=10)
 
-        tk.Button(button_frame, text="Add Product", command=self.add_item,
-                  bg='#27ae60', fg='white', padx=20).grid(row=0, column=0, padx=5)
-        tk.Button(button_frame, text="Update Product", command=self.update_item,
-                  bg='#f39c12', fg='white', padx=20).grid(row=0, column=1, padx=5)
-        tk.Button(button_frame, text="Clear", command=self.clear_item_form,
+        self.add_button = tk.Button(button_frame, text="Add Product", command=lambda: add_product(self),
+                                    bg='#27ae60', fg='white', padx=20)
+        self.add_button.grid(row=0, column=0, padx=5)
+
+        self.update_button = tk.Button(button_frame, text="Update Product", command=lambda: update_product(self),
+                                       bg='#f39c12', fg='white', padx=20)
+
+        tk.Button(button_frame, text="Clear", command=self.clear_product_form,
                   bg='#95a5a6', fg='white', padx=20).grid(row=0, column=2, padx=5)
 
         # List frame
@@ -105,37 +107,66 @@ class ProductManagement:
         scrollbar2.pack(side='right', fill='y')
 
         # Bind events
-        self.item_tree.bind('<Double-1>', self.load_item_data)
+        self.item_tree.bind('<Double-1>', self.load_product_data)
 
         # Context menu
         self.item_menu = tk.Menu(self.root, tearoff=0)
-        self.item_menu.add_command(label="Edit", command=self.load_item_data)
-        self.item_menu.add_command(label="Delete", command=self.delete_item)
-        self.item_tree.bind('<Button-3>', self.show_item_context_menu)
+        self.item_menu.add_command(
+            label="Edit", command=self.load_product_data)
+        self.item_menu.add_command(
+            label="Delete", command=lambda: delete_product(self))
+        self.item_tree.bind('<Button-3>', self.show_product_context_menu)
 
-        self.load_item_categories()
-        self.load_products()
+        load_product_categories(self)
+        load_products(self)
 
-    def add_item(self):
-        pass
+    def show_add_button(self):
+        """Show add button"""
+        self.add_button.grid(row=0, column=0, padx=5)
+        self.update_button.grid_forget()
 
-    def update_item(self):
-        pass
+    def show_update_button(self):
+        """Show update button"""
+        self.update_button.grid(row=0, column=0, padx=5)
+        self.add_button.grid_forget()
 
-    def clear_item_form(self):
-        pass
+    def clear_product_form(self):
+        """Clear item form"""
+        self.item_name_entry.delete(0, tk.END)
+        self.item_serial_entry.delete(0, tk.END)
+        self.item_category_combo.set('')
+        self.item_total_entry.delete(0, tk.END)
+        self.item_available_entry.delete(0, tk.END)
+        self.item_price_entry.delete(0, tk.END)
 
-    def load_item_data(self, event=None):
-        pass
+        self.show_add_button()
 
-    def delete_item(self):
-        pass
+    def load_product_data(self, event=None):
+        """Load product data into form"""
+        selected = self.item_tree.selection()
 
-    def show_item_context_menu(self, event):
+        if selected:
+            self.show_update_button()
+
+            item = self.item_tree.item(selected[0])
+            values = item['values']
+
+            self.item_name_entry.delete(0, tk.END)
+            self.item_name_entry.insert(0, values[1])
+
+            self.item_serial_entry.delete(0, tk.END)
+            self.item_serial_entry.insert(0, values[2])
+
+            self.item_category_combo.set(values[3])
+
+            self.item_total_entry.delete(0, tk.END)
+            self.item_total_entry.insert(0, values[4])
+
+            self.item_available_entry.delete(0, tk.END)
+            self.item_available_entry.insert(0, values[5])
+
+            self.item_price_entry.delete(0, tk.END)
+            self.item_price_entry.insert(0, values[6])
+
+    def show_product_context_menu(self, event):
         self.item_menu.tk_popup(event.x_root, event.y_root)
-
-    def load_item_categories(self):
-        pass
-
-    def load_products(self):
-        pass
