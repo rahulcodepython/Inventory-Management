@@ -60,9 +60,10 @@ Replace `app.py` with your actual main Python file name if it's different.
 
 ---
 
-## 📄 License
-
-This project is open-source and available under the **MIT License**.
+![Screenshot 2025-07-03 190246](https://github.com/user-attachments/assets/d98e6aed-ef23-4e82-8005-04fb30fd8287)
+![Screenshot 2025-07-03 190253](https://github.com/user-attachments/assets/77c69b6a-1f3d-4780-b615-8a557b539f48)
+![Screenshot 2025-07-03 190405](https://github.com/user-attachments/assets/61fab412-52b0-4406-a548-f28c17574ece)
+![Screenshot 2025-07-03 190412](https://github.com/user-attachments/assets/bca2af81-8f75-4367-87da-297ea8f4ae64)
 
 ---
 
