@@ -16,6 +16,7 @@ from src.init_database import init_database
 from src.create_main_interface import create_main_interface
 from ui.categories import CategoryManagement
 from ui.products import ProductManagement
+from ui.customers import CustomerManagement
 
 
 class InventoryManagementSystem:
@@ -34,13 +35,16 @@ class InventoryManagementSystem:
             self.root, self.main_frame, self.cursor, self.conn)
         self.product_management = ProductManagement(
             self.root, self.main_frame, self.cursor, self.conn)
+        self.customer_management = CustomerManagement(
+            self.root, self.main_frame, self.cursor, self.conn)
 
         # Create main interface
         create_main_interface(
             self.root,
             self.main_frame,
             self.category_management.show_categories,
-            self.product_management.show_products
+            self.product_management.show_products,
+            self.customer_management.show_customers,
         )
 
 

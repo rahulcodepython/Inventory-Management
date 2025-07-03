@@ -38,7 +38,5 @@ def update_category(self: "CategoryManagement"):
         self.categories_data_list[index] = updated_row
         self.cat_tree.item(selected[0], values=updated_row[1:])
         self.cat_tree.selection_remove(selected[0])
-
-        self.show_add_button()  # Reset to add button after update
     except Exception as e:
         messagebox.showerror("Error", f"Error updating category: {str(e)}")
