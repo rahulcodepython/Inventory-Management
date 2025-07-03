@@ -43,29 +43,12 @@ class CategoryManagement:
         button_frame = tk.Frame(form_frame, bg='#f0f0f0')
         button_frame.grid(row=0, column=4, columnspan=2, pady=10)
 
-        self.add_button = tk.Button(button_frame, text="Add Category", command=lambda: add_category(
-            self.cat_name_entry,
-            self.cat_desc_entry,
-            self.cat_tree,
-            self.categories_data_list,
-            self.cursor,
-            self.conn,
-            self.clear_category_form
-        ),
-            bg='#27ae60', fg='white', padx=20)
+        self.add_button = tk.Button(button_frame, text="Add Category", command=lambda: add_category(self),
+                                    bg='#27ae60', fg='white', padx=20)
         self.add_button.grid(row=0, column=0, padx=5, sticky='w')
 
-        self.update_button = tk.Button(button_frame, text="Update Category", command=lambda: update_category(
-            self.cat_tree,
-            self.cat_name_entry,
-            self.cat_desc_entry,
-            self.cursor,
-            self.conn,
-            self.categories_data_list,
-            self.show_add_button,
-            self.clear_category_form
-        ),
-            bg='#f39c12', fg='white', padx=20)
+        self.update_button = tk.Button(button_frame, text="Update Category", command=lambda: update_category(self),
+                                       bg='#f39c12', fg='white', padx=20)
 
         tk.Button(button_frame, text="Clear", command=self.clear_category_form,
                   bg='#95a5a6', fg='white', padx=20).grid(row=0, column=1, padx=5, sticky='w')
@@ -95,11 +78,11 @@ class CategoryManagement:
         self.cat_menu = tk.Menu(self.root, tearoff=0)
         self.cat_menu.add_command(
             label="Edit", command=self.load_category_data)
-        self.cat_menu.add_command(label="Delete", command=lambda: delete_category(
-            self.cat_tree, self.categories_data_list, self.cursor, self.conn))
+        self.cat_menu.add_command(
+            label="Delete", command=lambda: delete_category(self))
         self.cat_tree.bind('<Button-3>', self.show_cat_context_menu)
 
-        load_categories(self.cat_tree, self.cursor, self.categories_data_list)
+        load_categories(self)
 
     def show_add_button(self):
         """Show Add button"""
