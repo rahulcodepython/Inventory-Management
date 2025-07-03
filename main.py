@@ -18,6 +18,7 @@ from ui.categories import CategoryManagement
 from ui.products import ProductManagement
 from ui.customers import CustomerManagement
 from ui.purchases import PurchaseManagement
+from ui.purchase_history import PurchaseHistoryManagement
 
 
 class InventoryManagementSystem:
@@ -40,6 +41,8 @@ class InventoryManagementSystem:
             self.root, self.main_frame, self.cursor, self.conn)
         self.purchase_management = PurchaseManagement(
             self.root, self.main_frame, self.cursor, self.conn)
+        self.purchase_history_management = PurchaseHistoryManagement(
+            self.root, self.main_frame, self.cursor, self.conn)
 
         # Create main interface
         create_main_interface(
@@ -49,6 +52,7 @@ class InventoryManagementSystem:
             self.product_management.show_products,
             self.customer_management.show_customers,
             self.purchase_management.show_purchase,
+            self.purchase_history_management.show_history
         )
 
 

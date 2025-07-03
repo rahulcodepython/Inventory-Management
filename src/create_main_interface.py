@@ -1,7 +1,7 @@
 import tkinter as tk
 
 
-def create_main_interface(root, main_frame, show_categories, show_products, show_customers, show_purchases):
+def create_main_interface(root, main_frame, show_categories, show_products, show_customers, show_purchases, show_history):
     """Create the main interface with navigation"""
     # Header
     header_frame = tk.Frame(root, bg='#2c3e50', height=70)
@@ -27,6 +27,8 @@ def create_main_interface(root, main_frame, show_categories, show_products, show
     tk.Button(nav_frame, text="Customers", command=show_customers,
               **button_style).pack(side='left', padx=10, pady=10)
     tk.Button(nav_frame, text="Purchases", command=show_purchases,
+              **button_style).pack(side='left', padx=10, pady=10)
+    tk.Button(nav_frame, text="Purchase History", command=show_history,
               **button_style).pack(side='left', padx=10, pady=10)
 
     # Main content area
