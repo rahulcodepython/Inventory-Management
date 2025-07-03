@@ -1,17 +1,4 @@
 import tkinter as tk
-from tkinter import ttk, messagebox, filedialog
-import sqlite3
-import uuid
-from datetime import datetime
-from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib import colors
-import os
-import pathlib
-import sys
-from config import config
-from commands import create_tables as create_tables_commands
 from src.init_database import init_database
 from src.create_main_interface import create_main_interface
 from ui.categories import CategoryManagement
