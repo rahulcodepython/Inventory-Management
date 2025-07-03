@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import PhotoImage
 from src.init_database import init_database
 from src.create_main_interface import create_main_interface
 from ui.categories import CategoryManagement
@@ -6,6 +7,7 @@ from ui.products import ProductManagement
 from ui.customers import CustomerManagement
 from ui.purchases import PurchaseManagement
 from ui.purchase_history import PurchaseHistoryManagement
+from src.resources_path import resource_path
 
 
 class InventoryManagementSystem:
@@ -14,6 +16,8 @@ class InventoryManagementSystem:
         self.root.title("Inventory Management System")
         self.root.geometry("1200x800")
         self.root.configure(bg='#f0f0f0')
+        self.icon = PhotoImage(file=resource_path("assets/logo.png"))
+        self.root.iconphoto(True, self.icon)
 
         # Initialize database
         self.conn, self.cursor = init_database()
