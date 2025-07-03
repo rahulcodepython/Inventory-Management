@@ -59,13 +59,16 @@ class CategoryManagement:
         list_frame.pack(fill='both', expand=True, pady=10)
 
         # Treeview for categories
-        columns = ('Name', 'Description')
+        columns = ('ID', 'Name', 'Description')
         self.cat_tree = ttk.Treeview(
             list_frame, columns=columns, show='headings', height=10)
 
         for col in columns:
             self.cat_tree.heading(col, text=col)
-            self.cat_tree.column(col, width=200)
+            if col == 'ID':
+                self.cat_tree.column(col, width=0, stretch=False)
+            else:
+                self.cat_tree.column(col, width=120)
 
         scrollbar = ttk.Scrollbar(
             list_frame, orient='vertical', command=self.cat_tree.yview)
@@ -104,10 +107,10 @@ class CategoryManagement:
             values = item['values']
 
             self.cat_name_entry.delete(0, tk.END)
-            self.cat_name_entry.insert(0, values[0])
+            self.cat_name_entry.insert(0, values[1])
 
             self.cat_desc_entry.delete(0, tk.END)
-            self.cat_desc_entry.insert(0, values[1])
+            self.cat_desc_entry.insert(0, values[2])
 
     def show_cat_context_menu(self, event):
         """Show context menu for categories"""

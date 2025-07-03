@@ -14,7 +14,7 @@ def load_categories(self: "CategoryManagement"):
             'SELECT id, name, description FROM categories ORDER BY name')
         for row in self.cursor.fetchall():
             self.categories_data_list.append(row)
-            self.cat_tree.insert('', 'end', values=row[1:])
+            self.cat_tree.insert('', 'end', values=row)
     else:
         for row in self.categories_data_list:
-            self.cat_tree.insert('', 'end', values=row[1:])
+            self.cat_tree.insert('', 'end', values=row)

@@ -29,7 +29,7 @@ def add_category(self: "CategoryManagement"):
         # Add to categories_data_list and treeview
         new_row = (category_id, name, description)
         self.categories_data_list.append(new_row)
-        self.cat_tree.insert('', 'end', values=new_row[1:])
+        self.cat_tree.insert('', 'end', values=new_row)
     except sqlite3.IntegrityError:
         messagebox.showerror("Error", "Category name already exists!")
     except Exception as e:
