@@ -1,0 +1,1 @@
+pyinstaller --noconfirm --onefile --windowed --name "InventoryManagementSystemLinux" --add-data "assets/logo.png:assets" --add-data "db/inventory.db:db" main.py
